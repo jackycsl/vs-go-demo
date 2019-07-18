@@ -8,10 +8,10 @@ import (
 	"text/template"
 )
 
-var tpl *template.Template
+var ts *template.Template
 
 func init() {
-	tpl = template.Must(template.ParseFiles("tpl.gohtml"))
+	ts = template.Must(template.ParseFiles("./ui/html/home.tmpl"))
 }
 
 func main() {
@@ -20,6 +20,9 @@ func main() {
 	mux.HandleFunc("/", home)
 	mux.HandleFunc("/ping", ping)
 
+	fileServer := http.FileServer(http.Dir("./ui/static/"))
+	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
+
 	log.Println("Starting server on :4000")
 	err := http.ListenAndServe(":4000", mux)
 	log.Fatal(err)
@@ -27,7 +30,7 @@ func main() {
 
 func home(w http.ResponseWriter, r *http.Request) {
 	hostname, _ := os.Hostname()
-	tpl.ExecuteTemplate(w, "tpl.gohtml", hostname)
+	ts.Execute(w, hostname)
 }
 
 func ping(w http.ResponseWriter, r *http.Request) {

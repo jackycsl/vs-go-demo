@@ -16,7 +16,7 @@ RUN go build \
 FROM scratch AS final
 
 COPY --from=builder /app /app
-COPY --from=builder /src/tpl.gohtml /
+COPY --from=builder /src/ui /ui
 
 EXPOSE 4000
 
