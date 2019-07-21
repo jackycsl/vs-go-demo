@@ -1,37 +1,40 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: default
-  name: go-demo
+  name: go-demo-deployment
   labels:
     app: go-demo
 spec:
   replicas: 3
-  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: go-demo
   template:
     metadata:
-      namespace: default
       labels:
         app: go-demo
     spec:
       containers:
         - name: go-demo
-          image: vsgdev/go-demo:latest
+          image: harbor.prod.kubix.tm.com.my/concourse-demo/go-demo:0.1
           imagePullPolicy: Always
           ports:
           - containerPort: 4000
+          securityContext:
+            runAsUser: 2000
+            allowPrivilegeEscalation: false
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: default
-  name: go-demo
+  name: go-service
 spec:
-  ports:
-  - name: http
-    port: 4000
-    protocol: TCP
-  selector:
-    app: demo-cicd
   type: LoadBalancer
+  selector:
+    app: go-demo
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 4000
