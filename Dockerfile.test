@@ -1,0 +1,12 @@
+ARG GO_VERSION=1.12
+
+FROM golang:${GO_VERSION}-alpine AS builder
+
+ENV GO111MODULE=on
+ENV CGO_ENABLED=0
+
+WORKDIR /src
+
+COPY ./ ./
+
+CMD go test ./...
