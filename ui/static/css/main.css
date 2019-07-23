@@ -39,8 +39,8 @@ header {
 
 body {
   line-height: 1.5;
-  background-color: #F1F3F6;
-  /* background-color: #f2fff2; */
+  /* background-color: #F1F3F6; */
+  background-color: #f2fff2;
   color: #34495E;
   overflow-y: scroll;
 }
