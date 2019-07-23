@@ -31,8 +31,8 @@ func TestHome(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if !bytes.Contains(body, []byte("Hello World")) {
-		t.Errorf("want body to contain %q", "Hello World")
+	if !bytes.Contains(body, []byte("Hello Go World")) {
+		t.Errorf("want body to contain %q", "Hello Go World")
 	}
 }
 
