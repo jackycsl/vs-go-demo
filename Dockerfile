@@ -1,6 +1,4 @@
-ARG GO_VERSION=1.12
-
-FROM golang:${GO_VERSION}-alpine AS builder
+FROM golang:1.12-alpine AS builder
 
 ENV GO111MODULE=on
 ENV CGO_ENABLED=0
